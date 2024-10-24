@@ -1,0 +1,57 @@
+.visualizar-esmaltes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f2f5; /* Cor de fundo suave */
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.visualizar-esmaltes-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.visualizar-esmaltes-container .ant-btn-primary {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.ant-card {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.ant-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ant-card-cover img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.ant-card-meta-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.ant-card-meta-description p {
+    margin: 0;
+    color: #555;
+}
+
+img {
+    width: fit-content;
+    height: fit-content;
+}

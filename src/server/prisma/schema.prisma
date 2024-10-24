@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model esmaltacao {
+  id         Int      @id @default(autoincrement())
+  foto       String   @db.VarChar(255)
+  esmalte_id Int?
+  nome       String?  @db.VarChar(255)
+  notas      String?
+  esmalte    esmalte? @relation(fields: [esmalte_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model esmalte {
+  id          Int          @id @default(autoincrement())
+  nomeesmalte String       @db.VarChar(255)
+  marca       String       @db.VarChar(255)
+  cor         String       @db.VarChar(50)
+  tipoesmalte TipoEsmalte?   
+  fotos       String       @db.VarChar(255)
+  notas       String?
+  esmaltacao  esmaltacao[]
+}
+
+enum TipoEsmalte {
+  Cremoso
+  Cintilante
+  Metalico
+  Fosco
+  Glitter
+  Holografico
+  Perolado
+  Gel
+}
+
+model usuario {
+  id          Int    @id @default(autoincrement())
+  nomeusuario String @db.VarChar(255)
+  email       String @db.VarChar(255)
+  senha       String @db.VarChar(255)
+}

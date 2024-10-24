@@ -1,0 +1,55 @@
+/* Importando a fonte Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Aplicando a fonte globalmente */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Container principal */
+.detalhes-esmalte-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Card de detalhes */
+.detalhes-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Título do esmalte */
+.esmalte-title {
+    margin-bottom: 15px;
+    color: #3b5998;
+}
+
+/* Estilizando o conteúdo dos detalhes */
+.esmalte-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+}
+
+/* Container da imagem */
+.image-container {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Estilizando a imagem */
+.esmalte-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
