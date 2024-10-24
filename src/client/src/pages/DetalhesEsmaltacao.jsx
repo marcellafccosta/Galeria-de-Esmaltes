@@ -1,49 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Spin, Row, Col, Typography, Button } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
 import '../styles/DetalhesEsmalte.css';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
-const DetalhesEsmalte = () => {
+const DetalhesEsmaltacao = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
-    const [esmalte, setEsmalte] = useState(null);
+    const [esmaltacao, setEsmaltacao] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchEsmalte = async () => {
+        const fetchEsmaltacao = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/esmalte/${id}`);
+                const response = await fetch(`http://localhost:3000/api/esmaltacao/${id}`);
                 if (!response.ok) {
-                    throw new Error('Erro ao buscar detalhes do esmalte');
+                    throw new Error('Erro ao buscar detalhes da esmaltação');
                 }
                 const data = await response.json();
-                setEsmalte(data);
+                setEsmaltacao(data);
             } catch (error) {
                 alert(error.message);
             } finally {
                 setLoading(false);
             }
         };
-
-        fetchEsmalte();
+        fetchEsmaltacao();
     }, [id]);
 
     const handleVoltarClick = () => {
-        navigate('/VisualizarEsmaltes');
+        navigate('/VisualizarEsmaltacao');
     };
 
     return (
         <div className="container">
-            <h1 style={{ textAlign: 'center', marginBottom: '2px', paddingTop: '20px' }}>Detalhes do Esmalte</h1>
-
+            <h1 style={{ textAlign: 'center', marginBottom: '2px', paddingTop: '20px' }}>Detalhes Esmaltação</h1>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f2f5', padding: '20px' }}>
                 {loading ? (
                     <Spin size="large" />
                 ) : (
-                    esmalte && (
+                    esmaltacao && (
                         <div style={{ maxWidth: 1200, width: '100%' }}>
                             <Button
                                 type="primary"
@@ -59,9 +57,13 @@ const DetalhesEsmalte = () => {
                                     <div style={{ overflow: 'hidden', borderRadius: '8px', backgroundColor: '#fff', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <img
                                             className='foto'
-                                            alt={esmalte.nomeesmalte}
-                                            src={`http://localhost:3000/${esmalte.fotos}`}
-
+                                            alt={esmaltacao.nome}
+                                            src={`http://localhost:3000/${esmaltacao.foto}`}
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'cover'
+                                            }}
                                         />
                                     </div>
                                 </Col>
@@ -79,13 +81,11 @@ const DetalhesEsmalte = () => {
                                             padding: '20px'
                                         }}
                                     >
-                                        <Title level={2} style={{ marginBottom: '15px', textAlign: 'center' }}>{esmalte.nomeesmalte}</Title>
+                                        <Title level={2} style={{ marginBottom: '15px', textAlign: 'center' }}>{esmaltacao.nome}</Title>
                                         <div className="esmalte-details">
-                                            <Text strong style={{ fontSize: '16px' }}>Marca: {esmalte.marca}</Text>
-                                            <Text strong style={{ fontSize: '16px' }}>Cor: {esmalte.cor}</Text>
-                                            <Text strong style={{ fontSize: '16px' }}>Tipo: {esmalte.tipoesmalte}</Text>
-                                            {esmalte.notas && (
-                                                <Text strong style={{ fontSize: '16px' }}>Notas: {esmalte.notas}</Text>
+
+                                            {esmaltacao.notas && (
+                                                <Text strong style={{ fontSize: '16px' }}>Notas: {esmaltacao.notas}</Text>
                                             )}
                                         </div>
                                     </Card>
@@ -99,4 +99,4 @@ const DetalhesEsmalte = () => {
     );
 };
 
-export default DetalhesEsmalte;
+export default DetalhesEsmaltacao;

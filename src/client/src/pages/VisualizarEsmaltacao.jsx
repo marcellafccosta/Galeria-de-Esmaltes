@@ -5,38 +5,36 @@ import '../styles/VisualizarEsmaltes.css';
 
 const { Meta } = Card;
 
-const VisualizarEsmaltes = () => {
-    const [esmaltes, setEsmaltes] = useState([]);
+const VisualizarEsmaltacao = () => {
+    const [esmaltacoes, setEsmaltacoes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(8);
     const navigate = useNavigate();
 
     const handleCardClick = (id) => {
-        navigate(`/DetalhesEsmalte/${id}`);
-    }
+        navigate(`/DetalhesEsmaltacao/${id}`);
+    };
 
     useEffect(() => {
-        const fetchEsmaltes = async () => {
+        const fetchEsmaltacoes = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/esmalte');
+                const response = await fetch('http://localhost:3000/api/esmaltacao');
                 if (!response.ok) {
-                    throw new Error('Erro ao buscar esmaltes');
+                    throw new Error('Erro ao buscar esmaltacao');
                 }
                 const data = await response.json();
-                setEsmaltes(data);
-            } catch (error) {
-                alert(error.message);
-            } finally {
+                setEsmaltacoes(data);
                 setLoading(false);
+            } catch (error) {
+                console.error(error);
             }
         };
-
-        fetchEsmaltes();
+        fetchEsmaltacoes();
     }, []);
 
     const handleCadastroClick = () => {
-        navigate('/cadastroEsmalte');
+        navigate('/CadastroEsmaltacao');
     };
 
     const handlePageChange = (page, pageSize) => {
@@ -46,17 +44,27 @@ const VisualizarEsmaltes = () => {
 
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const currentEsmaltes = esmaltes.slice(startIndex, endIndex);
+    const currentEsmaltes = esmaltacoes.slice(startIndex, endIndex);
+
+    const determineImageClass = (width, height) => {
+        if (width > height) {
+            return 'horizontal';
+        } else if (height > width) {
+            return 'vertical';
+        } else {
+            return '';
+        }
+    };
 
     return (
         <div className="visualizar-container">
-            <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Lista de Esmaltes</h1>
+            <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Lista de Esmaltações</h1>
             <Button
                 type="primary"
                 onClick={handleCadastroClick}
                 style={{ marginBottom: '20px' }}
             >
-                Cadastrar Novo Esmalte
+                Cadastrar Nova Esmaltação
             </Button>
             {loading ? (
                 <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -65,31 +73,27 @@ const VisualizarEsmaltes = () => {
             ) : (
                 <>
                     <Row gutter={[16, 16]}>
-                        {currentEsmaltes.map((esmalte) => (
-                            <Col key={esmalte.id} span={6}>
+                        {currentEsmaltes.map((esmaltacao) => (
+                            <Col key={esmaltacao.id} span={6}>
                                 <Card
                                     hoverable
-                                    onClick={() => handleCardClick(esmalte.id)}
-                                    
+                                    onClick={() => handleCardClick(esmaltacao.id)}
                                     cover={
                                         <div className="image-container">
                                             <img
-                                                className='foto'
-                                                alt={esmalte.nomeesmalte}
-                                                src={`http://localhost:3000/${esmalte.fotos}`}
+                                                className={'foto'}
+                                                alt={esmaltacao.nome}
+                                                src={`http://localhost:3000/${esmaltacao.foto}`}
                                             />
                                         </div>
                                     }
                                 >
                                     <Meta
-                                        title={esmalte.nomeesmalte}
+                                        title={esmaltacao.nome}
                                         description={
-                                            <>
-                                                <p>Marca: {esmalte.marca}</p>
-                                                <p>Cor: {esmalte.cor}</p>
-                                                <p>Tipo: {esmalte.tipoesmalte}</p>
-                                                {esmalte.notas && <p>Notas: {esmalte.notas}</p>}
-                                            </>
+                                            <div>
+                                                {esmaltacao.notas && <p>Notas: {esmaltacao.notas}</p>}
+                                            </div>
                                         }
                                     />
                                 </Card>
@@ -100,7 +104,7 @@ const VisualizarEsmaltes = () => {
                         <Pagination
                             current={currentPage}
                             pageSize={pageSize}
-                            total={esmaltes.length}
+                            total={esmaltacoes.length}
                             onChange={handlePageChange}
                             showSizeChanger
                             pageSizeOptions={['8', '16', '24']}
@@ -112,4 +116,4 @@ const VisualizarEsmaltes = () => {
     );
 };
 
-export default VisualizarEsmaltes;
+export default VisualizarEsmaltacao;
